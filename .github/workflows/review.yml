@@ -23,12 +23,12 @@ jobs:
           if git diff --name-only origin/${{ github.base_ref }} HEAD | grep -Eq '*\.js|node\.d\.plugin\.in' ; then
             echo 'run_eslint=1' >> $GITHUB_ENV
           fi
-      - name: Run eslint
+      - name: eslint
         if: env.run_eslint == 1
         uses: reviewdog/action-eslint@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-check
+          reporter: github-pr-review # Change reporter.
           eslint_flags: '.'
 
   hadolint:
