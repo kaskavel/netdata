@@ -24,7 +24,7 @@ jobs:
             echo 'run_eslint=1' >> $GITHUB_ENV
           fi
       - name: Install modules
-        run: yarn
+        run: npm i
       - name: Run ESLint
         if: env.run_eslint == 1
         run: ./node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx
