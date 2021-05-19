@@ -1,0 +1,28 @@
+---
+name: UI tests
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  source-build:
+    name: Run Netdata Agent UI tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Install the agent
+        run: >-
+          sudo apt-get install zlib1g-dev uuid-dev libuv1-dev liblz4-dev libjudy-dev libssl-dev libelf-dev libmnl-dev
+          gcc make git autoconf autoconf-archive autogen automake pkg-config curl python cmake &&
+          sudo ./netdata-installer.sh --dont-wait
+      - name: Cypress run
+        run: |
+          npm install cypress --save-dev
+          ./node_modules/.bin/cypress run --config-file tests/cypress/config.json

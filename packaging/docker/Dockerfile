@@ -22,6 +22,8 @@ ENV EXTRA_INSTALL_OPTS=$EXTRA_INSTALL_OPTS
 COPY . /opt/netdata.git
 WORKDIR /opt/netdata.git
 
+RUN apt-get install uuid-dev zlib1g-dev json-c-dev gcc make autoconf automake pkg-config
+
 # Install from source
 RUN chmod +x netdata-installer.sh && \
    cp -rp /deps/* /usr/local/ && \
